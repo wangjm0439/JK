@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <script type="text/javascript" src="../static/js/global.js"></script>
+	<title>框总结</title>
+</head>
+
+<body>
+	<p>
+	<label>table表格</label><br/>
+	<table border="1">
+		<thead>
+        <tr>
+            <th>
+                <input type="checkbox" onclick="check_all();" id="theadInp" />全选
+            </th>
+            <th>英雄名</th>
+            <th >国籍</th>
+        </tr>
+        </thead>
+        <tbody onclick="test()" id="tbody">
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>拉克丝</td>
+            <td>德玛西亚</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>德莱文</td>
+            <td>诺克萨斯</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>蒙多</td>
+            <td>祖安</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" />
+            </td>
+            <td>艾希</td>
+            <td>弗雷尔卓德</td>
+        </tr>
+        </tbody>
+	</table>
+<p ><input type= "button" value= "开始游戏" onclick= "attackEnemy();" /></p>
+
+</body>
+</html>
