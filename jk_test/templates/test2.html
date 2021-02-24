@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>table</title>
+</head>
+<body>
+<table id="customers" style="table-layout:fixed;">
+    <thead>
+    <tr>
+        <th class="checkall">
+            <input type="checkbox" onclick="check_all();"  id="theadInp" />全选</th>
+        <th class="interId">id</th>
+        <th class="interMode">模块</th>
+        <th class="interDesc">接口描述</th>
+        <th class="interParam">接口地址</th>
+        <th width="100px" class="interFormat">数据格式</th>
+        <th class="interParam">请求参数</th>
+        <th class="interOption">请求方法</th>
+        <th class="interAuthor">开发者</th>
+        <th class="interResult">预期结果</th>
+        <th class="interInputTime">录入时间</th>
+        <th class="interOperat">操作</th>
+    </tr>
+    </thead>
+    <!-- tfoot>
+    <tr>
+        <th class="checkall">
+            </th>
+        <th class="interId">id</th>
+        <th class="interMode">模块</th>
+        <th>接口描述</th>
+        <th class="interParam">接口地址</th>
+        <th class="interFormat">数据格式</th>
+        <th class="interParam">请求参数</th>
+        <th class="interOption">请求方法</th>
+        <th class="interAuthor">开发者</th>
+        <th class="interResult">预期结果</th>
+        <th class="interInputTime">录入时间</th>
+        <th class="interOperat">操作</th>
+        <th class="checkall"></th>
+    </tr>
+    </tfoot -->
+    <tbody id="tbody">
+    <form action="/delinterface" method="get">
+        {% for i in result[0] %}
+            <tr>
+                <td class="checkall"><input type="checkbox"/></td>
+                <td class="interId">{{ i[0] }}</td>
+                <td class="interMode">{{ i[1] }}</td>
+                <th class="interDesc">{{ i[8] }}</th>
+                <td class="interResult" title="{{ i[2] }}">{{ i[2] }}</td>
+                <td class="interParam">{{ i[3] }}</td>
+                <td>
+                    <div title="{{ i[4] }}" class="interParam">{{ i[5] }}</div>
+                </td>
+                <td width="200px" class="interOption">{{ i[6] }}</td>
+                <td class="interAuthor">{{ i[7] }}</td>
+                <th>{{ i[9] }}</th>
+                <td class="interResult">{{ i[4] }}</td>
+                <td class="interInputTime">
+                    <button name="iid" value="{{ i[0] }}">删除</button>
+                    <button name='rid' value="{{ i[0] }}">执行</button>
+                    <input id="editinter" name="editinter2" value="{{ i[0] }}" class="btn" onclick="testbut();Show2();"
+                           title="编辑"/></td>
+            </tr>
+        {% endfor %}
+    </form>
+    </tbody>
+    </div>
+    <!--编辑接口-->
+    <div id="shade2" class="c3 hide"></div>
+    <div id="moda2" class="c4 hide">
+        <h2>编辑</h2>
+        <form action="/updateInterface" method="post">
+            <p>模块：<input id="emode" name="imode" value=""/></p>
+            <p>接口描述：<textarea id="edesc" name="idesc" rows="1" cols="55"></textarea></p>
+            <p>接口地址：<textarea id="eaddr" name="iaddr" rows="1" cols="55"></textarea></p>
+            <p>数据格式：<input id="eheader" value="" name="iheader"/></p>
+            <p>请求参数：<textarea id="eparam" name="iparam" rows="4" cols="45" onmouseover="showparam2()"
+                              onmouseout="hideparam2()"></textarea><span id="testparam2">提供参数都按json格式输入</span></p>
+            <p>请求方法:<input id="eoption" value="" placeholder="" name="ioption"/></p>
+            <p>开发者：<input id="eauthor" value='' name="iauthor"/></p>
+            <p>预期结果：<input id="eresult" name="iresult" value=''/></p>
+            <p>测试账号密码：<textarea id="euserpwd" name="iuserpwd" rows="2" cols="45" onmouseover="showtip2()"
+                                onmouseout="hidetip2()"></textarea><span id="testtip2">提供调用该接口的账号和密码,按当前格式输入内容,确保正确的json格式</span>
+            </p>
+            <input id="editinter" name="iid" value='' type="hidden"/>
+            <p>
+                <button>确定</button>
+            </p>
+            <p><input type="button" value="取消" onclick="Hide2();"></p>
+        </form>
+    </div>
+</table>
+
+</body>
+</html>
