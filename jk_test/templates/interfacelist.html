@@ -88,8 +88,8 @@
                           onmouseout="hideparam()"></textarea><span id="testparam">提供参数都按json格式输入</span></p>
         <p>请求方法:<input list="optionlist" value="" name="ioption" autocomplete="off"/>
             <datalist id="optionlist">
-                {% for i in result[7] %}
-                    <option>{{ i }}</option>
+                {% for i in result[5] %}
+                    <option>{{ i[0] }}</option>
                 {% endfor %}
             </datalist>
         </p>
@@ -151,7 +151,7 @@
     <form action="/delinterface" method="get">
         {% for i in result[0] %}
             <tr>
-                <td class="checkall"><input type="checkbox"/></td>
+                <td class="checkall"><input  name="check" value="{{i[0] }}" type="checkbox"/></td>
                 <td class="interId">{{ i[0] }}</td>
                 <td class="interMode">{{ i[1] }}</td>
                 <th class="interDesc">{{ i[8] }}</th>
