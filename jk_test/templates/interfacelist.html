@@ -23,6 +23,7 @@
             text-overflow: ellipsis;
         }
     </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 <audio src="{{ url_for('static',filename='vidio/tuihou.mp3') }}" controls="controls"></audio>
@@ -60,11 +61,7 @@
     <button>GO</button>
     <p style="display:inline">total: {{ result[2] }} | totalpage: {{ result[1] }}</p>
 </form>
-<form method="get" action="/runtest" style="display:inline">
-    <input type="hidden" name="execut" value=""/>
-    &nbsp&nbsp||&nbsp&nbsp
-    <button>执行接口测试</button>
-</form>
+
 || <input type="button" value="新增接口" onclick="Show();">
 <!--新增接口-->
 <div id="shade" class="c1 hide"></div>
@@ -111,12 +108,15 @@
         <input type="button" value="取消" onclick="Hide();">
     </p>
 </div>
+
+<form method="get" action="/runtest" style="display:inline">
+    <input type="hidden" name="execut" value=""/>
+    &nbsp&nbsp||&nbsp&nbsp
+    <button onclick="check()">执行接口测试</button>
 <table  onclick="table_width();" id="customers" style="table-layout:fixed;">
     <thead>
     <tr>
-        <th class="checkall">
-            <input type="checkbox" onclick="check_all();"  id="theadInp" />全选</th>
-        <th class="interId">id</th>
+        <th class="interId"><input type="checkbox" onclick="check_all();"  id="theadInp" />id</th>
         <th class="interMode">模块</th>
         <th class="interDesc">接口描述</th>
         <th class="interParam">接口地址</th>
@@ -151,29 +151,31 @@
     <form action="/delinterface" method="get">
         {% for i in result[0] %}
             <tr>
-                <td class="checkall"><input  name="check" value="{{i[0] }}" type="checkbox"/></td>
-                <td class="interId">{{ i[0] }}</td>
-                <td class="interMode">{{ i[1] }}</td>
-                <th class="interDesc">{{ i[8] }}</th>
-                <td class="interResult" title="{{ i[2] }}">{{ i[2] }}</td>
-                <td class="interParam">{{ i[3] }}</td>
+                <td class="interId"><input  name="ch_id" value="{{i[0] }}" type="checkbox"/>{{ i[0] }}</td>
+                <td class="interMode" name="ch_mode">{{ i[1] }}</td>
+                <th class="interDesc" name="ch_desc">{{ i[8] }}</th>
+                <td class="interResult" name="ch_result" title="{{ i[2] }}">{{ i[2] }}</td>
+                <td class="interParam" name="ch_param">{{ i[3] }}</td>
                 <td>
-                    <div title="{{ i[4] }}" class="interParam">{{ i[5] }}</div>
+                    <div title="{{ i[4] }}" class="interParam" name="ch_addr">{{ i[5] }}</div>
                 </td>
-                <td width="200px" class="interOption">{{ i[6] }}</td>
-                <td class="interAuthor">{{ i[7] }}</td>
-                <th>{{ i[9] }}</th>
+                <td width="200px" class="interOption" name="ch_option">{{ i[6] }}</td>
+                <td class="interAuthor" name="ch_author">{{ i[7] }}</td>
+                <th name="ch_expet">{{ i[9] }}</th>
                 <td class="interResult">{{ i[4] }}</td>
                 <td class="interInputTime">
                     <button name="iid" value="{{ i[0] }}">删除</button>
                     <button name='rid' value="{{ i[0] }}">执行</button>
-                    <input id="editinter" name="editinter2" value="{{ i[0] }}" class="btn" onclick="testbut();Show2();"
+                    <input  type="button" id="editinter" name="editinter2" value="{{ i[0] }}" class="btn" onclick="testbut();Show2();"
                            title="编辑"/></td>
             </tr>
         {% endfor %}
     </form>
+
+
     </tbody>
     </div>
+
     <!--编辑接口-->
     <div id="shade2" class="c3 hide"></div>
     <div id="moda2" class="c4 hide">
@@ -199,5 +201,8 @@
         </form>
     </div>
 </table>
+</form>
+<input type="button" onclick="check()" value="提交" />
+
 </body>
 </html>

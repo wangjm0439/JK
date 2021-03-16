@@ -69,6 +69,7 @@ function testbut() {
             document.getElementById("eauthor").value = result2[7];
             document.getElementById("eresult").value = result2[8];
             document.getElementById("euserpwd").value = result2[9];
+            console.log(result2);
         }
     }
 }
@@ -257,4 +258,23 @@ function table_width() {
             }
         };
     }
+}
+
+//获取选择框整行数据
+function check() {
+    var check = $("input[type='checkbox']:checked");//在table中找input下类型为checkbox属性为选中状态的数据
+    var i = 0;
+    check.each(function () {
+        i++;
+    });
+    console.log(i);
+    var data=[];
+
+    check.each(function () {//遍历
+        var row = $(this).parent("td").parent("tr");
+        var id = row.find("[name='ch_id']").html();//注意html()和val()
+        data.push(id)
+    })
+    var result=JSON.stringify({"data":data})
+     console.log("打印对象：",result);
 }

@@ -123,9 +123,9 @@ def delinterface():
 def edit():
     if request.method=='POST':
         data=request.get_data()
-        #print("data",type(data))
+        print("data",data)
         edit_id=json.loads(data)["editId"]
-        #print(edit_id)
+        print(edit_id)
         editId_data=my_sql.sel_edit_interface(str(edit_id))[0]
         #print(editId_data)
         return json.dumps({"msg": "ok", "code": 200, "data": editId_data})
@@ -151,6 +151,12 @@ def updateinterface():
             print(e)
             return "<html><p>添加失败</p><a href='interfaceList'>返回待请求接口列表</a></html>"
 
+
+@app.route("/runtest",methods=['GET','POST'])
+def all_req():
+    data = request.args.getlist('ch_id')
+    print("data:", data)
+    return "请求成功"
 
 
 
@@ -179,7 +185,6 @@ def interfacerespindList():
     total_page=my_sql.num_interfacerespond()[0][0]
     intername=my_sql.sel_intername_resp()
     return render_template("interfacerespondlist.html",result=(data,total_page,page,intername))
-
 
 
 
