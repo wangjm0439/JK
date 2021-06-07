@@ -1,26 +1,37 @@
 #!/usr/bin/python
 # -*- coding=utf-8 -*-
+# import requests.packages.urllib3.util.ssl_
+# requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL'
+# requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'DES-CBC3-SHA'
 import requests
-from flask import Flask,render_template,request
+import ssl
+import http.client
+import requests_pkcs12
 
-app=Flask(__name__)
-@app.route('/')
-def index():
-    return render_template("test3.html")
+#https 双向认证案例
 
-@app.route('/center/add')
-def add():
-    name=request.args.get('name')
-    age=request.args.get('age')
-    hobby=request.args.get('ch_id')
-    return "姓名：%s 年龄：%s 爱好：%s" % (name, age, hobby)
+def sign():
+    url = "https://sandbox.99bill.com:9445/cnp/ind_auth"
 
-@app.route('/runtest')
-def runtest():
-    name=request.args.get('name')
-    age=request.args.get('age')
-    hobby=request.args.getlist('ch_id')
-    return "姓名：%s 年龄：%s 爱好：%s" % (name, age, hobby)
+    data = '''<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+    <MasMessage xmlns="http://www.99bill.com/mas_cnp_merchant_interface">
+    <version>1.0</version><indAuthContent><merchantId>104110045112012</merchantId> 
+            <terminalId>00002012</terminalId> 
+                   <customerId></customerId>  
+                          <externalRefNumber>20210419000000001002</externalRefNumber> 
+                                  <pan>6239734964680536</pan> 
+                                          <cardHolderName>王五</cardHolderName>
+                                                   <idType>0</idType> 
+                                                           <cardHolderId>110101199003075672</cardHolderId>       
+      <phoneNO>18888888889</phoneNO></indAuthContent></MasMessage>'''
 
-if __name__=="__main__":
-    app.run(debug='127.0.0.1',port='8080')
+    header = {"Content-Type": "text/xml; charset=UTF-8", 'Connection': 'close',
+              "Authorization": "Basic MTA0MTEwMDQ1MTEyMDEyOnZwb3MxMjM="}
+    resp = requests_pkcs12.post(url, headers=header, data=(data).encode('utf-8'),
+                                pkcs12_filename='10411004511201123.pfx', pkcs12_password='000000', verify=False)
+    print("返回参数：", resp.text)
+    print("状态码：", resp.status_code)
+
+
+if __name__ == "__main__":
+    sign()

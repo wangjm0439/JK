@@ -155,7 +155,7 @@ def updateinterface():
 @app.route("/runtest",methods=['GET','POST'])
 def all_req():
     data = request.args.getlist('ch_id')
-    print("data:", data)
+    #print("data:", data,type(data))
     return "请求成功"
 
 
