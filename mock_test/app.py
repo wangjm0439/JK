@@ -5,17 +5,18 @@ from Util.orderNo import *
 app = Flask(__name__)
 
 
-@app.route('/amount',methods=["POST","GET"])
+@app.route('/depute',methods=["POST","GET"])
 def amount():
     if request.method=='POST':
         req_data = json.loads(request.data)
-        amount=req_data["transAmt"]
+        amount=req_data["biz_content"]["amount"]
+        loan_id=req_data["biz_content"]["out_trade_no"]
         data1={
         "data": {
-            "bizOrderNo": req_data["bizOrderNo"],
+            "bizOrderNo":loan_id,
             "bizStatus": "SUCCESS",
             "instRespCodeAndMsg": "[E0000]-处理成功",
-            "outBizNo": req_data["outBizNo"],
+            "outBizNo": loan_id,
             "payOrderNo":orderNo(),
             "respCode": "G000",
             "respMsg": "交易成功",
@@ -25,10 +26,10 @@ def amount():
     }
         data2={
         "data": {
-            "bizOrderNo": req_data["bizOrderNo"],
+            "bizOrderNo": loan_id,
             "bizStatus": "SUCCESS",
             "instRespCodeAndMsg": "[E0001]-处理失败",
-            "outBizNo": req_data["outBizNo"],
+            "outBizNo": loan_id,
             "payOrderNo": orderNo(),
             "respCode": "G002",
             "respMsg": "交易失败",
@@ -39,10 +40,10 @@ def amount():
 
         data3 = {
             "data": {
-                "bizOrderNo": req_data["bizOrderNo"],
+                "bizOrderNo": loan_id,
                 "bizStatus": "SUCCESS",
                 "instRespCodeAndMsg": "[E0002]-处理中",
-                "outBizNo": req_data["outBizNo"],
+                "outBizNo": loan_id,
                 "payOrderNo": orderNo(),
                 "respCode": "G001",
                 "respMsg": "处理中",
